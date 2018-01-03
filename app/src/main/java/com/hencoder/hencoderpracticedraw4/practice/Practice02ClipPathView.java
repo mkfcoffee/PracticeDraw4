@@ -18,6 +18,7 @@ public class Practice02ClipPathView extends View {
     Bitmap bitmap;
     Point point1 = new Point(200, 200);
     Point point2 = new Point(600, 200);
+    Path path = new Path();
 
     public Practice02ClipPathView(Context context) {
         super(context);
@@ -33,6 +34,10 @@ public class Practice02ClipPathView extends View {
 
     {
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.maps);
+        path.setFillType(Path.FillType.INVERSE_WINDING);
+        path.lineTo(point2.x+10, point2.y+20);
+        path.rLineTo(60, 60);
+        path.close();
     }
 
     @Override
@@ -40,6 +45,9 @@ public class Practice02ClipPathView extends View {
         super.onDraw(canvas);
 
         canvas.drawBitmap(bitmap, point1.x, point1.y, paint);
+        canvas.save();
+        canvas.clipPath(path);
         canvas.drawBitmap(bitmap, point2.x, point2.y, paint);
+        canvas.restore();
     }
 }
